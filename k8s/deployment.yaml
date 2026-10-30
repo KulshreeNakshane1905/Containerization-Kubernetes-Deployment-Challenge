@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudops-dashboard
+  labels:
+    app: cloudops-dashboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudops-dashboard
+  template:
+    metadata:
+      labels:
+        app: cloudops-dashboard
+    spec:
+      terminationGracePeriodSeconds: 15
+      containers:
+        - name: cloudops-dashboard
+          image: cloudops-dashboard:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: APP_NAME
+              value: "CloudOps Control Center"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 96Mi
+            limits:
+              cpu: 300m
+              memory: 192Mi
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10

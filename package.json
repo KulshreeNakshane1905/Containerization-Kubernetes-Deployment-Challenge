@@ -1,0 +1,9 @@
+{
+  "name": "cloudops-k8s-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CloudOps dashboard for demonstrating Docker and Kubernetes deployments",
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=22"}
+}
